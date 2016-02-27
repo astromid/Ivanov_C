@@ -17,7 +17,7 @@ public:
 		len = 0;
 	}
 
-	void append(T new_element)	//добавление эл-та в конец списка
+	void append(T new_element)	//add node in the end of the list
 	{
 		node<T> *new_node = new node<T>;
 		new_node->data = new_element;
@@ -34,7 +34,7 @@ public:
 		len++;
 	}
 
-	void insert(T new_element, int index)	//вставка эл-та в указанную позицию
+	void insert(T new_element, int index)	//insert node in this index
 	{
 		node<T> *new_node = new node<T>;
 		new_node->data = new_element;
@@ -58,7 +58,7 @@ public:
 		len++;
 	}
 
-	void remove(int index)	//удаление эл-та в указанной позиции
+	void remove(int index)	//remove node in this index
 	{
 		int i = 0;
 		node<T> *curr = head;
@@ -74,7 +74,7 @@ public:
 		len--;
 	}
 
-	T operator[](int index)	//чтение
+	T operator[](int index)	//read
 	{
 		int i = 0;
 		node<T> *curr = head;
