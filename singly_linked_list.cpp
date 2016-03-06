@@ -11,6 +11,7 @@ template <typename T> class List
 	int len;
 
 public:
+
 	List()
 	{
 		head = nullptr;
