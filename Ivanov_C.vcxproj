@@ -110,6 +110,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="iterator_list.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="singly_linked_list.cpp" />
   </ItemGroup>

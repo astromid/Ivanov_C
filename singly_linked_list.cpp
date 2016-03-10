@@ -15,7 +15,18 @@ public:
 	List()
 	{
 		head = nullptr;
+		end = nullptr;
 		len = 0;
+	}
+
+	~List()
+	{
+		while (head != end)
+		{
+			node<T> *tmp = head->next;
+			delete head;
+			head = tmp;
+		}
 	}
 
 	void append(T new_element)	//add node in the end of the list
