@@ -1,5 +1,4 @@
 #include <iterator>
-
 using namespace std;
 
 template <typename T> struct node
@@ -18,6 +17,7 @@ public:
 	class f_list_iterator : public iterator<forward_iterator_tag, T, ptrdiff_t, T*, T&>
 	{
 	public:
+
 		node<T>* f_iterator;
 		node<T>* f_iterator_head;
 
@@ -58,7 +58,11 @@ public:
 				this->f_iterator = (this->f_iterator)->next;
 				return *this;
 			}
-			else return *this;
+			else
+			{
+				cout << "Failed to increment iterator." << endl;
+				return *this;
+			}
 		}
 
 		T& operator*()

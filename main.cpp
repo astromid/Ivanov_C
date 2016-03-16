@@ -1,27 +1,46 @@
 #include <iostream>
-#include "singly_linked_list.cpp"
+#include "bid_iterator.h"
+
+
 
 int main()
 {
-	List<int> NewList1;
-	NewList1.append(20);
-	NewList1.append(30);
-	NewList1.append(40);
-	//cout << NewList1[0] << " " << NewList1[1] << " " << NewList1[2] << endl;
-	NewList1.insert(10, 0);
-	cout << NewList1[0] << " " << NewList1[1] << " " << NewList1[2] << " " << NewList1[3] << endl;
-	//NewList1.remove(1);
-	//cout << NewList1[0] << " " << NewList1[1] << " " << NewList1[2] << endl;
+	sl_list<int> NewList;
+	NewList.insert(1, 0);
+	NewList.insert(2, 1);
+	NewList.insert(3, 2);
+	NewList.insert(4, 3);
+	cout << "List test #1:" << endl;
+	cout << NewList[0] << " " << NewList[1] << " " << NewList[2] << " " << NewList[3] << endl;
 
-	List<int> ::bid_list_iterator bIterator1;
-	List<int> ::bid_list_iterator bIterator2;
+	f_iterator<int> fIt1;
+	f_iterator<int> fIt2;
+	fIt1 = NewList.get_head();
+	cout << "Forward iterator test #1: " << *fIt1 << endl;
+	fIt1++;
+	cout << "Forward iterator test #2: " << *fIt1 << endl;
 
-	bIterator1 = NewList1.get_head();
-	bIterator2 = NewList1.get_head();
-	bIterator2 = NewList1.get_end();
-	reverse(bIterator1, bIterator2);
-	cout << NewList1[0] << " " << NewList1[1] << " " << NewList1[2] << " " << NewList1[3] << endl;
-	//cout << NewList1[0] << " " << NewList1[1] << " " << NewList1[2] << endl;
+	
+	fIt1 = NewList.get_head();
+	//fIt2 = NewList.get_head();
+	fIt2 = NewList.get_end();
+	cout << "Forward iterator test #3 (distance): " << distance(fIt1, fIt2) << endl;
+	
+
+	bid_iterator<int> bIt1;
+	bid_iterator<int> bIt2;
+
+	bIt1 = NewList.get_head();
+	//bIt2 = NewList.get_head();
+	bIt2 = NewList.get_end();
+	reverse(bIt1, bIt2);
+	cout << "Bidirectional iterator test #1 (reverse): " << endl;
+	cout << NewList[0] << " " << NewList[1] << " " << NewList[2] << " " << NewList[3] << endl;
+	cout << "Bidirectional iterator test #2:" << *bIt1 << endl;
+	bIt1++;
+	cout << "Bidirectional iterator test #3: " << *bIt1 << endl;
+	bIt1--;
+	cout << "Bidirectional iterator test #4: " << *bIt1 << endl;
 	system("pause");
 	return 0;
 }

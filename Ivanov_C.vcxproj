@@ -75,6 +75,10 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -112,6 +116,11 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="singly_linked_list.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="bid_iterator.h" />
+    <ClInclude Include="f_iterator.h" />
+    <ClInclude Include="sl_list.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
