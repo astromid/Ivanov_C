@@ -22,25 +22,20 @@ int main()
 
 	
 	fIt1 = NewList.get_head();
-	//fIt2 = NewList.get_head();
 	fIt2 = NewList.get_end();
 	cout << "Forward iterator test #3 (distance): " << distance(fIt1, fIt2) << endl;
+	advance(fIt1, 2);
+	cout << "Forward iterator test #4 (advance): " << *fIt1 << endl;
 	
 
 	bid_iterator<int> bIt1;
 	bid_iterator<int> bIt2;
 
 	bIt1 = NewList.get_head();
-	//bIt2 = NewList.get_head();
 	bIt2 = NewList.get_end();
 	reverse(bIt1, bIt2);
 	cout << "Bidirectional iterator test #1 (reverse): " << endl;
 	cout << NewList[0] << " " << NewList[1] << " " << NewList[2] << " " << NewList[3] << endl;
-	cout << "Bidirectional iterator test #2:" << *bIt1 << endl;
-	bIt1++;
-	cout << "Bidirectional iterator test #3: " << *bIt1 << endl;
-	bIt1--;
-	cout << "Bidirectional iterator test #4: " << *bIt1 << endl;
 	system("pause");
 	return 0;
 }

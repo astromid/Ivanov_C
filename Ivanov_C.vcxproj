@@ -115,7 +115,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="singly_linked_list.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bid_iterator.h" />

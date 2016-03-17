@@ -47,6 +47,7 @@ public:
 		if (head == nullptr)
 		{
 			head = new_node;
+			new_node->next = nullptr;
 			end = new_node;
 		}
 		else
@@ -67,6 +68,10 @@ public:
 				}
 				new_node->next = curr->next;
 				curr->next = new_node;
+				if (index == len)
+				{
+					end = curr->next;
+				}
 			}
 		}
 		len++;

@@ -30,20 +30,49 @@ public:
 
 	bool operator!=(f_iterator fIt)
 	{
-		if (this->curr_ptr->next != fIt.curr_ptr->next)
+		if (this->curr_ptr == nullptr || fIt.curr_ptr == nullptr)
 		{
-			return true;
+			if (this->curr_ptr == nullptr && fIt.curr_ptr == nullptr)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
 		}
-		else return false;
+		else
+		{
+			if (this->curr_ptr->next != fIt.curr_ptr->next)
+			{
+				return true;
+			}
+			else return false;
+		}
 	}
 
 	bool operator==(f_iterator fIt)
 	{
-		if (this->curr_ptr->next == fIt.curr_ptr->next)
+		if (this->curr_ptr == nullptr || fIt.curr_ptr == nullptr)
 		{
-			return true;
+			if (this->curr_ptr == nullptr && fIt.curr_ptr == nullptr)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
-		else return false;
+		else
+		{
+			if (this->curr_ptr->next == fIt.curr_ptr->next)
+			{
+				return true;
+			}
+			else return false;
+		}
+
 	}
 
 	f_iterator& operator++()

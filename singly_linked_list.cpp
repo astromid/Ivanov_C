@@ -161,7 +161,7 @@ public:
 		}
 		else
 		{
-			end->next = new_node;
+			end->next = nullptr;
 			end = new_node;
 		}
 		len++;
