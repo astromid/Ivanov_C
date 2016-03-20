@@ -1,6 +1,7 @@
 #pragma once
 #include <iterator>
-#include "sl_list.h"
+#include "node.h"
+
 using namespace std;
 
 template <typename T>
@@ -24,6 +25,11 @@ public:
 	f_iterator(const f_iterator& fIt)
 	{
 		curr_ptr = fIt.curr_ptr;
+	}
+
+	f_iterator(node<T>* pointer)
+	{
+		this->curr_ptr = pointer;
 	}
 
 	~f_iterator() {}
@@ -53,25 +59,11 @@ public:
 
 	bool operator==(f_iterator fIt)
 	{
-		if (this->curr_ptr == nullptr || fIt.curr_ptr == nullptr)
+		if ( this->operator!=(fIt) )
 		{
-			if (this->curr_ptr == nullptr && fIt.curr_ptr == nullptr)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
+			return false;
 		}
-		else
-		{
-			if (this->curr_ptr->next == fIt.curr_ptr->next)
-			{
-				return true;
-			}
-			else return false;
-		}
+		else return true;
 
 	}
 
@@ -101,7 +93,7 @@ public:
 
 	void operator=(f_iterator fIt)
 	{
-		this->curr_ptr = fIt->curr_ptr;
+		this->curr_ptr = fIt.curr_ptr;
 	}
 
 	void operator=(node<T>* pointer)

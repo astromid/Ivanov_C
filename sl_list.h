@@ -1,28 +1,24 @@
 #pragma once
-
-template <typename T> struct node
-{
-	T data;
-	node* next;
-};
+#include "bid_iterator.h"
+#include "node.h"
 
 template <typename T> class sl_list
 {
 	node<T>* head;
-	node<T>* end;
+	node<T>* tail;
 	int len;
 
 public:
 	sl_list()
 	{
 		head = nullptr;
-		end = nullptr;
+		tail = nullptr;
 		len = 0;
 	}
 
 	~sl_list()
 	{
-		while (head != end)
+		while (head != tail)
 		{
 			node<T> *tmp = head->next;
 			delete head;
@@ -30,14 +26,24 @@ public:
 		}
 	}
 
-	node<T>* get_head()
+	f_iterator<T> begin()
 	{
-		return head;
+		return f_iterator<T>(this->head);
 	}
 
-	node<T>* get_end()
+	f_iterator<T> end()
 	{
-		return end;
+		return f_iterator<T>(this->tail);
+	}
+
+	bid_iterator<T> bbegin()
+	{
+		return bid_iterator<T>(head, head);
+	}
+
+	bid_iterator<T> bend()
+	{
+		return bid_iterator<T>(head, tail);
 	}
 
 	void insert(T new_element, int index)
@@ -48,7 +54,7 @@ public:
 		{
 			head = new_node;
 			new_node->next = nullptr;
-			end = new_node;
+			tail = new_node;
 		}
 		else
 		{
@@ -70,7 +76,7 @@ public:
 				curr->next = new_node;
 				if (index == len)
 				{
-					end = curr->next;
+					tail = curr->next;
 				}
 			}
 		}
@@ -93,7 +99,7 @@ public:
 		len--;
 	}
 
-	T operator[](int index)
+	T& operator[](int index)
 	{
 		int i = 0;
 		node<T>* curr = head;

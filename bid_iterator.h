@@ -27,6 +27,18 @@ public:
 		curr_ptr = bIt.curr_ptr;
 	}
 
+	bid_iterator(const f_iterator& fIt, const f_iterator& fIt_head)
+	{
+		head_ptr = fIt_head->curr_ptr;
+		curr_ptr = fIt->curr_ptr;
+	}
+
+	bid_iterator(node<T>* head_pointer, node<T>* curr_pointer)
+	{
+		head_ptr = head_pointer;
+		curr_ptr = curr_pointer;
+	}
+
 	~bid_iterator() {}
 
 	bid_iterator& operator--()
@@ -53,21 +65,4 @@ public:
 	{
 		return this->operator--();
 	}
-
-	void operator=(const bid_iterator& bIt)
-	{
-		head_ptr = bIt->head_ptr;
-		curr_ptr = bIt->curr_ptr;
-	}
-
-	void operator=(node<T>* pointer)
-	{
-		this->curr_ptr = pointer;
-		if (this->head_ptr == nullptr)
-		{
-			this->head_ptr = pointer;
-		}
-	}
-
 };
-
