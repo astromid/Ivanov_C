@@ -24,7 +24,6 @@ int main()
 	
 	bid_iterator<int> bIt1 = NewList.bbegin();
 	bid_iterator<int> bIt2 = NewList.bend();
-	bIt2.head_ptr = bIt2.curr_ptr;									//some magic
 
 	reverse(bIt1, bIt2);
 	cout << "Bidirectional iterator test #1 (reverse): " << endl;

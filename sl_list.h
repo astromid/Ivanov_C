@@ -2,7 +2,8 @@
 #include "bid_iterator.h"
 #include "node.h"
 
-template <typename T> class sl_list
+template <typename T>
+class sl_list
 {
 	node<T>* head;
 	node<T>* tail;
@@ -12,7 +13,8 @@ public:
 	sl_list()
 	{
 		head = nullptr;
-		tail = nullptr;
+		tail = new node<T>;
+		tail->next = nullptr;
 		len = 0;
 	}
 
@@ -53,8 +55,7 @@ public:
 		if (head == nullptr)
 		{
 			head = new_node;
-			new_node->next = nullptr;
-			tail = new_node;
+			new_node->next = tail;
 		}
 		else
 		{
@@ -74,10 +75,6 @@ public:
 				}
 				new_node->next = curr->next;
 				curr->next = new_node;
-				if (index == len)
-				{
-					tail = curr->next;
-				}
 			}
 		}
 		len++;

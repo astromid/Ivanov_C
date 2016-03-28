@@ -50,7 +50,7 @@ public:
 			this->curr_ptr = this->head_ptr;
 			while (this->curr_ptr->next != tmp)
 			{
-				this->curr_ptr++;
+				this->operator++();
 			}
 			return *this;
 		}

@@ -118,6 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bid_iterator.h" />
+    <ClInclude Include="f_allocator.h" />
     <ClInclude Include="f_iterator.h" />
     <ClInclude Include="node.h" />
     <ClInclude Include="sl_list.h" />
