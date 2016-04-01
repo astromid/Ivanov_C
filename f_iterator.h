@@ -15,7 +15,7 @@ public:
 	typedef T* pointer;
 	typedef T& reference;
 	
-	node<T>* curr_ptr;
+	node<value_type>* curr_ptr;
 
 	f_iterator()
 	{
@@ -27,9 +27,9 @@ public:
 		curr_ptr = fIt.curr_ptr;
 	}
 
-	f_iterator(node<T>* pointer)
+	f_iterator(node<value_type>* ptr)
 	{
-		this->curr_ptr = pointer;
+		this->curr_ptr = ptr;
 	}
 
 	~f_iterator() {}
@@ -86,7 +86,7 @@ public:
 		return this->operator++();
 	}
 
-	T& operator*()
+	reference operator*()
 	{
 		return this->curr_ptr->data;
 	}
@@ -96,8 +96,8 @@ public:
 		this->curr_ptr = fIt.curr_ptr;
 	}
 
-	void operator=(node<T>* pointer)
+	void operator=(node<T>* ptr)
 	{
-		this->curr_ptr = pointer;
+		this->curr_ptr = ptr;
 	}
 };

@@ -13,7 +13,7 @@ public:
 	typedef T* pointer;
 	typedef T& reference;
 
-	node<T>* head_ptr;
+	node<value_type>* head_ptr;
 
 	bid_iterator()
 	{
@@ -33,7 +33,7 @@ public:
 		curr_ptr = fIt->curr_ptr;
 	}
 
-	bid_iterator(node<T>* head_pointer, node<T>* curr_pointer)
+	bid_iterator(node<value_type>* head_pointer, node<value_type>* curr_pointer)
 	{
 		head_ptr = head_pointer;
 		curr_ptr = curr_pointer;
@@ -45,7 +45,7 @@ public:
 	{
 		if (this->curr_ptr != this->head_ptr)
 		{
-			node<T>* tmp = new node<T>;
+			node<value_type>* tmp = new node<value_type>;
 			tmp = this->curr_ptr;
 			this->curr_ptr = this->head_ptr;
 			while (this->curr_ptr->next != tmp)
