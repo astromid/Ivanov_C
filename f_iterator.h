@@ -1,5 +1,4 @@
 #pragma once
-#include <iterator>
 #include "node.h"
 
 using namespace std;
@@ -19,12 +18,12 @@ public:
 
 	f_iterator()
 	{
-		curr_ptr = nullptr;
+		this->curr_ptr = nullptr;
 	}
 
 	f_iterator(const f_iterator& fIt)
 	{
-		curr_ptr = fIt.curr_ptr;
+		this->curr_ptr = fIt.curr_ptr;
 	}
 
 	f_iterator(node<value_type>* ptr)
