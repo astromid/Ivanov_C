@@ -1,10 +1,11 @@
 #pragma once
 #include <fstream>
 #include <limits>
+#include <string>
 
 using namespace std;
 
-template <typename T>
+template <typename T, char* filename>
 class f_allocator
 {
 private:
