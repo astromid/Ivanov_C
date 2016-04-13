@@ -1,17 +1,16 @@
 #pragma once
 #include <fstream>
 #include <limits>
-#include <string>
+#include <map>
 
 using namespace std;
 
-template <typename T, char* filename>
+template <typename T, const char* filename>
 class f_allocator
 {
 private:
 	fstream memory_file;
-	T* allocated_ptr;
-	size_t allocated_num;
+	map<T*, size_t> allocated_memory;
 
 public:
 	typedef size_t size_type;
@@ -22,35 +21,36 @@ public:
 	typedef const T& const_reference;
 	typedef T value_type;
 
-	template <typename U>
+	template <typename U, const char* filename>
 	struct rebind
 	{
-		typedef f_allocator<U> other;
+		typedef f_allocator<U, filename> other;
 	};
 
-	f_allocator(fstream m_file)
+	f_allocator()
 	{
-		this->memory_file = m_file;
+		this->memory_file(filename, fstream::app);
 	}
 
 	f_allocator(const f_allocator& f_al)
 	{
 		this->memory_file = f_al.memory_file;
-		this->allocated_num = f_al.allocated_num;
-		this->allocated_ptr = f_al.allocated_ptr;
+		this->allocated_memory = f_al.allocated_memory;
 	}
 
-	template <typename U>
-	f_allocator(const f_allocator<U>& f_al)
+	template <typename U, const char* filename>
+	f_allocator(const f_allocator<U, filename>& f_al)
 	{
 		this->memory_file = f_al.memory_file;
-		this->allocated_num = f_al.allocated_num;
-		this->allocated_ptr = f_al.allocated_ptr;
+		this->allocated_memory = f_al.allocated_memory;
 	}
 
 	~f_allocator()
 	{
-		this->memory_file.write(reinterpret_cast<const char *>(&(this->allocated_ptr)), this->allocated_num);
+		for each (const auto item in this->allocated_memory)
+		{
+			this->memory_file.write(reinterpret_cast<const char *>(item.first), item.second);
+		}
 	}
 
 	pointer address(reference x) const
@@ -66,16 +66,14 @@ public:
 	pointer allocate(size_type num, const_pointer = 0)
 	{
 		pointer ret = (pointer)(::operator new(num * sizeof(value_type)));
-		this->allocated_ptr = ret;
-		this->allocated_num = num;
+		this->allocated_memory.insert(ret, num);
 		return ret;
 	}
 
 	void deallocate(pointer p, size_type num)
 	{
 		::operator delete((void*)p);
-		this->allocated_ptr = nullptr;
-		this->allocated_num = 0;
+		this->allocated_memory.erase(p);
 	}
 
 	size_type max_size()
@@ -94,8 +92,9 @@ public:
 	}
 };
 
-template <typename T, typename U>
-bool operator== (const f_allocator<T>& f_al1, const f_allocator<U>& f_al2)
+//операции сравнения определены только если они связаны с одним и тем же файлом
+template <typename T, typename U, const char* filename>
+bool operator== (const f_allocator<T, filename>& f_al1, const f_allocator<U, filename>& f_al2)
 {
 	if (f_al1->memory_file == f_al2->memory_file)
 	{
@@ -104,8 +103,8 @@ bool operator== (const f_allocator<T>& f_al1, const f_allocator<U>& f_al2)
 	else return false;
 }
 
-template <typename T, typename U>
-bool operator!= (const f_allocator<T>& f_al1, const f_allocator<U>& f_al2)
+template <typename T, typename U, const char* filename>
+bool operator!= (const f_allocator<T, filename>& f_al1, const f_allocator<U, filename>& f_al2)
 {
 	return !(f_al1 == f_al2);
 }
