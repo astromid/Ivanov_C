@@ -5,15 +5,37 @@
 
 using namespace std;
 
-extern char const filename[] = "test_memory.txt";
+void Function(vector<char, f_allocator<char>> &A)
+{
+	cout << "Start of the vector" << endl;
+	int i = 0;
+	for(i=0; i < A.size(); i++)
+	{
+		cout << "A[" << i << "] = " << A[i] << endl;
+	}
+}
 
 int main()
 {
-	cout << "ASSUMING DIRECT CONTROL OF ALLOCATOR MAGIC" << endl;
-	vector<int, f_allocator<int, filename>> NewVector(10);
-	NewVector[0] = 0;
-	NewVector[1] = 3;
-	
+	vector<char, f_allocator<char>> DVector(5);
+	DVector[0] = 'a';
+	DVector[1] = 'b';
+	DVector[2] = 'c';
+	DVector[3] = 'd';
+	DVector[4] = 'e';
+	cout << "SFKJGHSDUIJ4985934539G" << endl;
+	Function(DVector);
+	cout << "SFKJGHSDUIJG" << endl;
+
+	vector<char, f_allocator<char>> NewVector(5);
+	int j = 1;
+	while(j < 10)
+	{
+		NewVector.resize(5*j);
+		copy(DVector.begin(), DVector.end(), NewVector.begin() + (j-1)*5 );
+		j++;
+	}
+	Function(NewVector);
 	system("pause");
 	return 0;
 }

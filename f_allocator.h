@@ -1,16 +1,19 @@
 #pragma once
 #include <fstream>
 #include <limits>
-#include <map>
+#include <string>
+#include <cstdio>
 
 using namespace std;
 
-template <typename T, const char* filename>
+template <typename T>
 class f_allocator
 {
-private:
+public:
+	string default_filename = "memory.txt";
+	string al_filename = "al_memory.txt";
 	fstream memory_file;
-	map<T*, size_t> allocated_memory;
+	fstream al_memory;
 
 public:
 	typedef size_t size_type;
@@ -21,36 +24,39 @@ public:
 	typedef const T& const_reference;
 	typedef T value_type;
 
-	template <typename U, const char* filename>
+	template <typename U>
 	struct rebind
 	{
-		typedef f_allocator<U, filename> other;
+		typedef f_allocator<U> other;
 	};
 
-	f_allocator()
-	{
-		this->memory_file(filename, fstream::app);
-	}
+	f_allocator() {}
 
-	f_allocator(const f_allocator& f_al)
-	{
-		this->memory_file = f_al.memory_file;
-		this->allocated_memory = f_al.allocated_memory;
-	}
+	f_allocator(const f_allocator& f_al) {}
 
-	template <typename U, const char* filename>
-	f_allocator(const f_allocator<U, filename>& f_al)
-	{
-		this->memory_file = f_al.memory_file;
-		this->allocated_memory = f_al.allocated_memory;
-	}
+	template <typename U>
+	f_allocator(const f_allocator<U>& f_al) {}
 
 	~f_allocator()
 	{
-		for each (const auto item in this->allocated_memory)
+		this->al_memory.open(al_filename, fstream::in);
+		this->memory_file.open(default_filename, fstream::app);
+		while(this->al_memory.good())
 		{
-			this->memory_file.write(reinterpret_cast<const char *>(item.first), item.second);
+			string str1, str2;
+			int ptr, num;
+			this->al_memory >> str1 >> str2;
+			if (str1 != "" && str2 != "")
+			{
+				ptr = stoi(str1);
+				num = stoi(str2);
+				this->memory_file.write(reinterpret_cast<const char *>(ptr), num);
+			}
 		}
+		this->memory_file.close();
+		this->al_memory.close();
+		remove(al_filename.c_str());
+		cout << "ALLOCATOR DESTROYED" << endl;
 	}
 
 	pointer address(reference x) const
@@ -66,14 +72,18 @@ public:
 	pointer allocate(size_type num, const_pointer = 0)
 	{
 		pointer ret = (pointer)(::operator new(num * sizeof(value_type)));
-		this->allocated_memory.insert(ret, num);
+		cout << "MEMORY ALLOCATED" << endl;
+		this->al_memory.open(al_filename, fstream::app);
+		this->al_memory << (int)ret << " " << num << endl;
+		this->al_memory.close();
+
 		return ret;
 	}
 
 	void deallocate(pointer p, size_type num)
 	{
 		::operator delete((void*)p);
-		this->allocated_memory.erase(p);
+		cout << "MEMORY DEALLOCATED" << endl;
 	}
 
 	size_type max_size()
@@ -92,19 +102,14 @@ public:
 	}
 };
 
-//операции сравнения определены только если они связаны с одним и тем же файлом
-template <typename T, typename U, const char* filename>
-bool operator== (const f_allocator<T, filename>& f_al1, const f_allocator<U, filename>& f_al2)
+template <typename T, typename U>
+bool operator== (const f_allocator<T>& f_al1, const f_allocator<U>& f_al2)
 {
-	if (f_al1->memory_file == f_al2->memory_file)
-	{
-		return true;
-	}
-	else return false;
+	return true;
 }
 
-template <typename T, typename U, const char* filename>
-bool operator!= (const f_allocator<T, filename>& f_al1, const f_allocator<U, filename>& f_al2)
+template <typename T, typename U>
+bool operator!= (const f_allocator<T>& f_al1, const f_allocator<U>& f_al2)
 {
-	return !(f_al1 == f_al2);
+	return false;
 }
