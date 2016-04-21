@@ -6,7 +6,7 @@ Created on Thu Apr 21 17:12:49 2016
 """
 
 import numpy as np
-N = 5000 #количество людей
+N = 2000 #количество людей
 
 films = open('films.txt', 'r')
 rating = open('rating.txt', 'w')
@@ -17,7 +17,7 @@ films.close()
 N_films = len(films_list)
 for i in range(0, N):
     mark1 = mark2 = mark3 = 0
-    while(mark1 == mark2 == mark3):    
+    while((mark1 == mark2) or (mark1 == mark3) or (mark2 == mark3)):    
         mark1 = np.random.choice(range(0, N_films))
         mark2 = np.random.choice(range(0, N_films))
         mark3 = np.random.choice(range(0, N_films))

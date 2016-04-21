@@ -115,7 +115,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="rating.cpp" />
-    <ClCompile Include="test_stack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bid_iterator.h" />
