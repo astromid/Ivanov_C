@@ -8,7 +8,7 @@ using namespace std;
 void Function(vector<char, f_allocator<char>> &A)
 {
 	cout << "Start of the vector" << endl;
-	int i = 0;
+	unsigned int i = 0;
 	for(i=0; i < A.size(); i++)
 	{
 		cout << "A[" << i << "] = " << A[i] << endl;

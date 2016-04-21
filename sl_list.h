@@ -12,15 +12,15 @@ class sl_list
 public:
 	sl_list()
 	{
-		head = nullptr;
 		tail = new node<T>;
+		head = tail;
 		tail->next = nullptr;
 		len = 0;
 	}
 
 	~sl_list()
 	{
-		while (head != tail)
+		while (head != tail && head != nullptr )
 		{
 			node<T> *tmp = head->next;
 			delete head;
@@ -106,5 +106,10 @@ public:
 			i++;
 		}
 		return curr->data;
+	}
+
+	size_t size()
+	{
+		return this->len;
 	}
 };
