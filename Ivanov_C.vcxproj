@@ -114,15 +114,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="rating.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="bid_iterator.h" />
     <ClInclude Include="f_allocator.h" />
     <ClInclude Include="f_iterator.h" />
     <ClInclude Include="node.h" />
     <ClInclude Include="sl_list.h" />
     <ClInclude Include="stack.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="parallel_search.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
