@@ -16,6 +16,8 @@ void thread_search(sIt begin, sIt end, vector<int>& ans, string sought)
 {
 	const sIt start_pos = begin;
 	int len = sought.length() - 1;
+	//перекрываем chunk'и
+	advance(end, len);
 	do
 	{
 		begin = search(begin, end, std::begin(sought), std::end(sought));
@@ -35,11 +37,12 @@ int search_count(sIt begin, sIt end, string sought, const int thread_num)
 	vector<thread> threads(thread_num);
 	int part_diff = distance(begin, end) / thread_num;
 	int len = sought.length() - 1;
-	for (int i = 0; i < thread_num; ++i)
+	for (int i = 0; i < thread_num - 1; ++i)
 	{
 		threads[i] = thread(thread_search, begin, begin + part_diff, ref(ans), sought);
 		advance(begin, part_diff - len);
 	}
+	threads[thread_num-1] = thread(thread_search, begin, begin + part_diff - len, ref(ans), sought);
 	for (int i = 0; i < thread_num; ++i)
 	{
 		threads[i].join();
@@ -63,9 +66,9 @@ int main()
 	{
 		clock_t cl1, cl2;
 		cl1 = clock();
-		int count = search_count(begin(buf), end(buf), sought, i);
+		int N = search_count(begin(buf), end(buf), sought, i);
 		cl2 = clock();
-		cout << i << " threads: ans = " << count << ", time = " << (float)(cl2 - cl1) / CLOCKS_PER_SEC << "s" << endl;
+		cout << i << " threads: N = " << N << ", time = " << (float)(cl2 - cl1) / CLOCKS_PER_SEC << "s" << endl;
 	}
 	system("pause");
 	return 0;
