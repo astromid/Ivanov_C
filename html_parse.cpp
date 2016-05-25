@@ -8,7 +8,7 @@ using namespace std;
 
 vector<string> FindPlainText(string& html_text)
 {
-	regex plain_pat(">(\\w|\\s)+<");
+	regex plain_pat(">[^<]+<");
 	smatch mat;
 	vector<string> plain_text;
 	while (regex_search(html_text, mat, plain_pat))
@@ -24,7 +24,7 @@ vector<string> FindPlainText(string& html_text)
 
 string FindTitle(string& html_text)
 {
-	regex title_pat("<title>(.)*<\/title>");
+	regex title_pat("<title>[^<]+<\/title>");
 	smatch mat;
 	regex_search(html_text, mat, title_pat);
 	string title = mat.str();
@@ -36,7 +36,7 @@ string FindTitle(string& html_text)
 vector<string> FindHeader(string& html_text)
 {
 	string text = html_text;
-	regex header_pat("<h(\\d)+>(\\w|\\s)+<\/h(\\d)+>");
+	regex header_pat("<h(\\d)+>[^<]+<\/h(\\d)+>");
 	smatch mat;
 	vector<string> headers;
 	while (regex_search(text, mat, header_pat))
@@ -54,7 +54,7 @@ int main()
 {
 	fstream html_file;
 	string html_text;
-	html_file.open("html_file.html", fstream::in);
+	html_file.open("tim.html", fstream::in);
 	while (html_file.good())
 	{
 		string str;
